@@ -1,0 +1,173 @@
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-top: 4px;
+}
+.select2-container--krajee .select2-selection--single .select2-selection__clear {
+    right: 2.3rem;
+}
+
+.actions span {
+    font-size: 18px;
+}
+.content-img {
+    width: 300px;
+    cursor: pointer;
+}
+.for-content-img {
+    width: 300px;
+    position: relative;
+}
+.for-content-img span {
+    color: red;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.admin-product-imgs {
+    width: 100%;
+    overflow-x: auto;
+    margin: 5px 0 20px 0;
+}
+.admin-product-imgs ul {
+    display: block;
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    height: 420px;
+}
+.admin-product-imgs ul li {
+    display: block;
+    position: relative;
+    float: left;
+    list-style-type: none;
+    margin: 0 15px 0 0;
+    padding: 0;
+    width: 250px;
+}
+.admin-product-imgs ul li img {
+    width: 250px;
+    height: 250px;
+}
+.admin-product-imgs ul li div.plus {
+    width: 250px;
+    height: 250px;
+    display: block;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+.admin-product-imgs ul li label {
+    display: block;
+}
+.admin-product-imgs ul li span {
+    color: red;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.admin-product-imgs ul li i.left, .admin-product-imgs ul li i.right {
+    color: #3c8dbc;
+    position: absolute;
+    top: 227px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.admin-product-imgs ul li i.left {
+    left: 2px;
+}
+.admin-product-imgs ul li i.right {
+    right: 2px;
+}
+.admin-product-imgs ul li textarea {
+    width: 100%;
+}
+.admin-product-imgs ul li .form-group, .admin-product-imgs ul li .help-block {
+    margin: 0;
+}
+.admin-product-imgs ul li div.plus i {
+    display: inline-block;
+    font-size: 130px;
+    color: #9fcdff;
+    text-align: center;
+    padding: 65px 0 0 0;
+}
+
+
+#popup-message {
+    position: fixed;
+    display: none;
+    width: calc(100% - 14px);
+    border-left: solid 16px #3c8dbc;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: #444 2px 2px 16px;
+    top: 3px;
+    left: 7px;
+    padding: 30px 7px;
+    z-index: 1100;
+    font-size: 20px;
+    font-weight: 500;
+    color: #666;
+    text-align: center;
+}
+#popup-message.error {
+    color: red;
+    background: #fff;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.table-responsive.kv-grid-container {
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #3c8dbc;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.admin-order-product h3 {
+    max-height: 20px;
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+}
+
+.admin-order-product-buttons {
+
+}
+.admin-order-product-buttons {
+    width: 100%;
+    padding-top: 1px;
+}
+.admin-order-product-buttons .input-group-btn, .admin-order-product-buttons input {
+    width: 22%;
+}
+.admin-order-product-buttons button {
+    padding: 3px 0!important;
+    width: 100%;
+}
+.admin-order-product-buttons input {
+    padding: 3px 0!important;
+    text-align: center;
+    border-left: none;
+    /*margin-left: -1px;*/
+}
+.admin-order-product-buttons .minus {
+    border-radius: 0!important;
+}
+.admin-order-product-buttons .input-group button span {
+    color: #999;
+    line-height: 0.8;
+}
+.cart-product-price {
+    color: #999;
+    font-size: 15px;
+    width: 33%;
+    text-align: center;
+    padding-top: 4px;
+    background-color: #fff;
+    border-radius: 6px 0 0 6px!important;
+}
