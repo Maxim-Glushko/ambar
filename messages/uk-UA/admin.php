@@ -119,7 +119,7 @@ return [
     'This Order does not exist' => 'Такого замовлення не існує',
     'Delete Product if you need' => 'Зменшення кількості неможливо, видаліть Товар із замовлення, якщо це необхідно',
     'The Order was processed' => 'Замовлення було успішно оброблено',
-    'There is no one Products in hte Order' => 'Немає жодного продукту у Замовленні',
+    'There is no one Products in the Order' => 'Немає жодного продукту у Замовленні',
     'You must select other status' => 'Необхідно вибрати інший статус',
 
     'new orders' => 'необроблених замовлень',

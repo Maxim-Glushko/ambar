@@ -60,7 +60,8 @@ class ProductSearch extends Product
     {
         $query = static::find()
             ->with(['picture', 'unit', 'content'])
-            ->where('products.availability > 0');
+            //->where('products.availability > 0') // наверное, в списке нужно выводить все, кроме умышленно скрытых
+            ->where('products.status > 0');
 
         $subQuery = 'least(products.price, IF ((discount * 1) > 0, discount, products.price))';
 

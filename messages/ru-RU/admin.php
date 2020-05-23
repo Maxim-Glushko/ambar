@@ -121,7 +121,7 @@ return [
     'This Order does not exist' => 'Такого заказа не существует',
     'Delete Product if you need' => 'Уменьшение количества невозможно, удалите Товар из заказа, если єто необходимо',
     'The Order was processed' => 'Заказ успешно обработан',
-    'There is no one Products in hte Order' => 'Нет ни одного продукта в Заказе',
+    'There is no one Products in the Order' => 'Нет ни одного продукта в Заказе',
     'You must select other status' => 'Нужно выбрать другой статус',
 
     'new orders' => 'необработанных заказов',

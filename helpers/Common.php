@@ -323,14 +323,14 @@ class Common {
 
     public static function d1($time) {
         return $time
-            ? (date('j', $time) . ' ' . static::misyac(date('n', $time)) . ' ' . date('’y H:i', $time))
+            ? (date('j', $time) . ' ' . static::misyac(date('n', $time)) . ' ' . date('Y H:i', $time))
             : '';
     }
 
     public static function d2($time)
     {
         return $time
-            ? (date('j', $time) . ' ' . static::misyac(date('n', $time)) . ' ' . date('’y') . '<br />' . date('H:i', $time))
+            ? (date('j', $time) . ' ' . static::misyac(date('n', $time)) . ' ' . date('Y') . '<br />' . date('H:i', $time))
             : '';
     }
 

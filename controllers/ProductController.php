@@ -43,7 +43,8 @@ class ProductController extends PapaController
     {
         $model = Product::find()->with('content', 'pictures')
             ->where(['slug' => $slug])
-            ->andWhere('availability > 0 AND status > 0')
+            //->andWhere('availability > 0 AND status > 0')
+            ->andWhere('status > 0')
             ->one();
         if ($model && $model->content) {
             return $model;

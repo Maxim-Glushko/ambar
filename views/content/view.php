@@ -59,9 +59,11 @@ if ($content->slug) { // на главной крошки не нужны
 
     <div class="content-view">
 
+        <?php if ($content->v('text')) { ?>
         <div class="content-text">
             <?= nl2br($content->v('text')) ?>
         </div>
+        <?php } ?>
 
         <?php $data = compact('content', 'page', 'sort', 'dataProvider'); ?>
 

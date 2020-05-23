@@ -31,19 +31,18 @@ $this->params['breadcrumbs'][] = $model->v('name');
 ?>
 
 <div class="content-view">
-    <?php if (CH::isAdmin()) { ?>
+    <?php /*if (CH::isAdmin()) { ?>
         <a href="<?= Url::to(['admin/news/update', 'id' => $model->id]) ?>"
                 class="btn btn-success pull-left" target="_blank" style="margin: 25px 20px 0 0;">
             <?= Yii::t('admin', 'Update') ?>
         </a>
-    <?php } ?>
+    <?php }*/ ?>
 
     <h1><?= $model->v('name') ?></h1>
 
     <div class="content-text">
         <?php if ($model->img) { ?>
-            <img src="<?= $model->img ?>" alt="<?= Html::encode($model->v('name')) ?>"
-                 style="width: 33%; float: left; margin: 4px 15px 10px 0;" />
+            <img src="<?= $model->img ?>" alt="<?= Html::encode($model->v('name')) ?>" class="news-img" />
         <?php } ?>
 
         <?= nl2br($model->v('text')) ?>

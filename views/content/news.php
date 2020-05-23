@@ -13,31 +13,38 @@ use yii\data\ActiveDataProvider;
  * @var $dataProvider ActiveDataProvider
  */
 
-$news = $dataProvider->models;
-
 ?>
 
-<?php if (count($news)) { ?>
-    <div class="row">
-        <?php foreach ($news as $one) { ?>
-            <?php $url = CH::$pLng . '/' . $content->slug . '/' . $one->slug; ?>
-            <div class="col-md-12 col-lg-6 one-news">
-                <a href="<?= $url ?>" class="news-img">
-                    <img src="<?= Picture::getThumb($one->img) ?>"
-                         alt="<?= Html::encode($one->v('name')) ?>"
-                         title="<?= Html::encode($one->v('name')) ?>" />
-                </a>
-                <h4>
-                    <a href="<?= $url ?>">
-                        <?= $one->v('name') ?>
-                    </a>
-                </h4>
-                <p><?= $one->v('description') ?></p>
-                <a href="<?= $url ?>" class="news-more">
-                    <?= Yii::t('common', 'More') ?>
-                </a>
-                <div style="clear:both;"></div>
-            </div>
-        <?php } ?>
+<?php if (count($dataProvider->models)) { ?>
+    <div class="news-list">
+        <div class="row">
+            <?php foreach ($dataProvider->models as $model) { ?>
+                <?php $url = CH::$pLng . '/' . $content->slug . '/' . $model->slug; ?>
+                <div class="col-md-12 col-lg-6">
+                    <div class="one-news">
+                        <a href="<?= $url ?>" class="news-img">
+                            <img src="<?= Picture::getThumb($model->img) ?>"
+                                 alt="<?= Html::encode($model->v('name')) ?>"
+                                 title="<?= Html::encode($model->v('name')) ?>" />
+                        </a>
+                        <div class="news-texts">
+                            <h4>
+                                <a href="<?= $url ?>">
+                                    <?= $model->v('name') ?>
+                                </a>
+                            </h4>
+                            <span class="news-date">
+                                <?= CH::d1($model->published_at ?: $model->created_at) ?>
+                            </span>
+                            <p><?= $model->v('description') ?></p>
+                        </div>
+                        <a href="<?= $url ?>" class="news-more">
+                            <?= Yii::t('common', 'More') ?>...
+                        </a>
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 <?php } ?>

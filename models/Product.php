@@ -73,20 +73,28 @@ class Product extends ActiveRecord
                 1 => 'в наличии',
                 2 => 'заканчивается',
                 3 => 'ожидается',
-                4 => 'закончилось',
+                4 => 'нет в наличии',
                 5 => 'снято с производства',
+                6 => 'акция',
             ] : [
                 0 => 'не показувати',
                 1 => 'в наявності',
                 2 => 'закінчується',
                 3 => 'очікується',
-                4 => 'закінчилося',
+                4 => 'немає в наявності',
                 5 => 'знято з виробництва',
+                6 => 'акція',
             ];
     }
 
+    const STATUS_UNAVAILABLE = 4;
+
     public function lngStatus() {
-        return AH::getValue(static::statuses(), $this->status ?: 1, '');
+        return AH::getValue(
+            static::statuses(),
+            ($this->availability > 0) ? $this->status : $this::STATUS_UNAVAILABLE,
+            ''
+        );
     }
 
     /**
@@ -212,7 +220,7 @@ class Product extends ActiveRecord
      * @param $sort
      * @return array|ActiveRecord[]
      */
-    public static function findByParams($contentId, $page, $sort)
+    /*public static function findByParams($contentId, $page, $sort)
     {
         $orderBy = AH::getValue(self::$sorts, $sort, false)
             ?? self::$sorts[array_key_first(self::$sorts)];
@@ -241,8 +249,12 @@ class Product extends ActiveRecord
         static::$maxPage = floor($query->count() / 24 - 1) + 1;
 
         return $query->all();
-    }
+    }*/
 
+    /**
+     * @param $field string
+     * @return string
+     */
     public function v($field) {
         return CH::getField($this, $field);
     }

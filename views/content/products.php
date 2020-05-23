@@ -91,14 +91,14 @@ $products = $dataProvider->models;
 
                     </div>
 
-                    <div class="product-buttons" <?= $productQuantity ? 'style="display:none;"' : '' ?>>
+                    <div class="product-buttons" <?= ($productQuantity || ($product->availability < 1)) ? 'style="display:none;"' : '' ?>>
                         <div class="input-group input-group-lg">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default minus">
                                     <span class="fa fa-minus"></span>
                                 </button>
                             </div>
-                            <input type="text" class="form-control product-input" value="1" />
+                            <input type="text" class="form-control product-input" value="1" max="<?= $product->availability ?>" />
                             <div class="input-group-btn two">
                                 <button type="button" class="btn btn-default plus">
                                     <span class="fa fa-plus"></span>
@@ -109,11 +109,16 @@ $products = $dataProvider->models;
                             </div>
                         </div>
                     </div>
+
                     <div class="product-already" <?= $productQuantity ? '' : 'style="display:none;"' ?>>
                         <span class="already">
                             <?= Yii::t('common', 'cart already has it') ?>
                         </span>
                     </div>
+
+                    <div class="product-unavailable" <?= ($product->availability < 1) ? '' : 'style="display:none;"' ?>>
+                    </div>
+
                     <div style="clear:both;"></div>
                 </div>
             </div>

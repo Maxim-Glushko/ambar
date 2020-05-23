@@ -72,10 +72,7 @@ class AdminController extends Controller
         // если не указано иное в контроллере-потомке, разрешаем все действия для админа и менеджера
         // иначе в потомке переопределяем и сужаем только для админа
         $this->haveYouGotRoles(['admin', 'manager']);
-
-        CH::$pLng = AH::getValue(
-            Yii::$app->params['pLngs'], Yii::$app->language, Yii::$app->params['pLngs'][Yii::$app->params['defLng']]
-        );
+        CH::setLngs();
         return parent::beforeAction($action);
     }
 

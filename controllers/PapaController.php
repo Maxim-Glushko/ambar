@@ -21,9 +21,7 @@ class PapaController extends Controller
      * @throws BadRequestHttpException
      */
     public function beforeAction($action) {
-        CH::$pLng = AH::getValue(
-            Yii::$app->params['pLngs'], Yii::$app->language, Yii::$app->params['pLngs'][Yii::$app->params['defLng']]
-        );
+        CH::setLngs();
         return parent::beforeAction($action);
     }
 }

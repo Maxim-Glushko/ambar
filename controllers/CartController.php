@@ -43,12 +43,17 @@ class CartController extends PapaController
         try {
             $result = Cart::add(Yii::$app->request->post());
             if ($result === true) {
-                $cart = Cart::extract(true);
+                Cart::extract(true);
+                return $this->cartAnswer();
+                /*$cart = Cart::extract(true);
                 $productIds = Cart::extractProductIds();
+                $unProductIds = Cart::extractUnProductIds();
                 return [
                     'cart' => $this->renderAjax('view', ['cart' => $cart]),
-                    'productIds' => $productIds
-                ];
+                    'productIds' => $productIds,
+                    'unProductIds' => $unProductIds,
+                    'statusUnavailable' => Product::statuses()[Product::STATUS_UNAVAILABLE]
+                ];*/
             } elseif (isset($result['error'])) {
                 return $result;
             } else {
@@ -117,12 +122,14 @@ class CartController extends PapaController
     protected function change($product_id, $quantity) {
         $result = Cart::change($product_id, $quantity);
         if ($result === true) {
-            $cart = Cart::extract(true);
+            Cart::extract(true);
+            return $this->cartAnswer();
+            /*$cart = Cart::extract(true);
             $productIds = Cart::extractProductIds();
             return [
                 'cart' => $this->renderAjax('view', ['cart' => $cart]),
                 'productIds' => $productIds
-            ];
+            ];*/
         } elseif (isset($result['error'])) {
             return $result;
         } else {
@@ -140,12 +147,14 @@ class CartController extends PapaController
         try {
             $result = Cart::plusMinus(Yii::$app->request->post());
             if ($result === true) {
-                $cart = Cart::extract(true);
+                Cart::extract(true);
+                return $this->cartAnswer();
+                /*$cart = Cart::extract(true);
                 $productIds = Cart::extractProductIds();
                 return [
                     'cart' => $this->renderAjax('view', ['cart' => $cart]),
                     'productIds' => $productIds
-                ];
+                ];*/
             } elseif (isset($result['error'])) {
                 return $result;
             } else {
@@ -194,11 +203,12 @@ class CartController extends PapaController
                 $productIds = Cart::extractProductIds();
 
                 if (Cart::isEmptyCart() || (Cart::cartSum() < intval(Setting::v('min-order-sum')))) {
-                    return [
+                    return $this->cartAnswer(false, Yii::t('common', 'cart is empty'));
+                    /*return [
                         'message' => Yii::t('common', 'cart is empty'),
                         'cart' => $this->renderAjax('view', compact('cart')),
                         'productIds' => $productIds,
-                    ];
+                    ];*/
                 }
 
                 if ($model->load($post)) {
@@ -231,28 +241,35 @@ class CartController extends PapaController
                         }
                         $order->sum = $sum;
                         $order->save(false);
-                        $cart = Cart::extract(true);
-                        $productIds = Cart::extractProductIds();
-                        return [
+                        Cart::extract(true);
+                        //$productIds = Cart::extractProductIds();
+                        return $this->cartAnswer(false, Setting::v('after-order'));
+                        /*return [
                             'cart' => $this->renderAjax('view', compact('cart')),
                             'productIds' => $productIds,
                             'message' => Setting::v('after-order'),
-                        ];
+                        ];*/
                     } else {
                         Yii::error('Ошибка при заказе. Ключ: ' . $order->key);
-                        return [
+                        return $this->cartAnswer(Yii::t('common', 'unidentified error'));
+                        /*return [
                             'cart' => $this->renderAjax('view', compact('cart')),
                             'productIds' => $productIds,
                             'error' => Yii::t('common', 'unidentified error')
-                        ];
+                        ];*/
                     }
                 } else {
-                    return [
+                    return $this->cartAnswer(
+                        $model->firstErrors[0],
+                        false,
+                        $this->renderAjax('order-form', compact('model'))
+                    );
+                    /*return [
                         'cart' => $this->renderAjax('view', compact('cart')),
                         'productIds' => $productIds,
                         'error' => $model->firstErrors[0],
                         'form' => $this->renderAjax('order-form', compact('model'))
-                    ];
+                    ];*/
                 }
             }
         } catch (\Exception $e) {
@@ -262,5 +279,27 @@ class CartController extends PapaController
             Yii::error('OrderForm Throwable: ' . $t->getMessage());
             return ['error' => Yii::t('common', 'unidentified error')];
         }
+    }
+
+    public function cartAnswer($error = false, $message = false, $form = false) {
+        $cart = Cart::extract();
+        $productIds = Cart::extractProductIds();
+        $unProductIds = Cart::extractUnProductIds();
+        $result = [
+            'cart' => $this->renderAjax('view', compact('cart')),
+            'productIds' => $productIds,
+            'unProductIds' => $unProductIds,
+            'statusUnavailable' => Product::statuses()[Product::STATUS_UNAVAILABLE]
+        ];
+        if ($error) {
+            $result['error'] = $error;
+        }
+        if ($message) {
+            $result['message'] = $message;
+        }
+        if ($form) {
+            $result['form'] = $form;
+        }
+        return $result;
     }
 }

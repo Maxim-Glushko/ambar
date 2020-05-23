@@ -599,7 +599,7 @@ ul.products-nav>li>a:hover, ul.products-nav>li>a:hover>h4 {
     padding: 8px 9px 10px 9px;
 }
 
-.product-buttons, .product-already {
+.product-buttons, .product-already, .product-unavailable {
     display: block;
     position: relative;
     clear: both;
@@ -745,6 +745,12 @@ ul.products-nav>li>a:hover, ul.products-nav>li>a:hover>h4 {
     text-align: center;
     padding-top: 4px;
     background-color: #fff;
+}
+.cart-product .last-product {
+    display: block;
+    color: #999;
+    font-style: italic;
+    margin: 0 0 0 calc(33% + 5px);
 }
 .cart-product-buttons {
     width: 100%;
@@ -935,4 +941,58 @@ ul.products-nav>li>a:hover, ul.products-nav>li>a:hover>h4 {
 }
 .product-view {
     padding: 16px 0 0 0;
+}
+
+.articles-list, .news-list {
+    margin-top: 15px;
+}
+.one-article, .one-news {
+    background: #fff;
+    padding: 0 16px 16px 16px;
+    margin: 0 0 16px 0;
+}
+.one-article .article-img, .one-news .news-img {
+    display: block;
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    margin-right: -16px;
+    position: relative;
+    overflow:hidden;
+}
+.one-article .article-img:after, .one-news .news-img:after {
+    content: "";
+    /*padding-top: 61.8%;*/
+    padding-top: 30.9%;
+    display: block;
+}
+.one-article .article-img img, .one-news .news-img img {
+    height:100%;
+    width: 100%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    object-fit:cover;
+}
+.one-article .article-texts, .one-news .news-texts {
+    height: 124px;
+    overflow: hidden;
+    text-align: justify;
+}
+.one-article .article-more, .one-news .news-more {
+    text-align: right;
+    font-style: italic;
+    display: block;
+}
+.one-news .news-date {
+    display: block;
+    padding: 0;
+    margin: -10px 0 0 0;
+    text-align: right;
+    font-size: 13px;
+    color: #777;
+}
+.content-text .news-img, .content-text .article-img {
+    width: calc(100% + 32px);
+    margin: -16px -16px 16px -16px;
 }

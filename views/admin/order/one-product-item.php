@@ -28,7 +28,7 @@ use yii\helpers\Url;
 
         </div>
         <div class="box-body">
-            <img src="<?= Picture::getThumb($product->picture->src ?: $product->content->img) ?>" alt=""
+            <img src="<?= Picture::getThumb($product->picture->src) ?: Picture::getThumb($product->content->img) ?>" alt=""
                  style="width:100px; height: 100px; float: left;" />
             <div style="margin-left:115px; position: relative;">
                 <p style="height: 43px;">
@@ -36,6 +36,12 @@ use yii\helpers\Url;
                         <?= $product->measure * 1 ?> <?= $product->unit->v('name') ?>
                     <?php } ?>
                 </p>
+
+                <?php if (($product->availability < $quantity) && ($orderStatus == 1)) { ?>
+                    <span style="color: red; display: block; position: absolute; top: 0; right: 0;">
+                        [<?= Yii::t('admin', 'Availability') ?>: <?= $product->availability ?>]
+                    </span>
+                <?php } ?>
 
                 <?php if ($orderStatus == 1) { ?>
                 <div class="admin-order-product-buttons">

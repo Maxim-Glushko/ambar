@@ -112,7 +112,7 @@ class OrderController extends AdminController
             if ($model->status == 1) {
                 $model->addError('status', Yii::t('admin', 'You must select other status'));
             } elseif (!$model->orderProducts || !count($model->orderProducts)) {
-                $model->addError('somebody', Yii::t('admin', 'There is no one Products in hte Order'));
+                $model->addError('somebody', Yii::t('admin', 'There is no one Products in the Order'));
             } else {
                 $chStatus = $model->isAttributeChanged('status');
                 $chComment = $model->isAttributeChanged('comment');
@@ -133,6 +133,15 @@ class OrderController extends AdminController
                     $model->data = Json::encode($data);
                 }
                 if ($model->save()) {
+                    if ($model->orderProducts && count($model->orderProducts)) {
+                        foreach ($model->orderProducts as $op) {
+                            $product = $op->product;
+                            $av = $product->availability - $op->quantity;
+                            $av = ($av >= 0) ? $av : 0;
+                            $product->availability = $av;
+                            $product->save(false);
+                        }
+                    }
                     Yii::$app->session->setFlash('success', Yii::t('admin', 'The Order was processed'));
                     return $this->redirect(['index', 'OrderSearch[status]' => 1]);
                 }

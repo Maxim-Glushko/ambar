@@ -11,6 +11,7 @@ use app\helpers\Common as CH;
 /**
  * @var $this View
  * @var $form null|string
+ * @var $unProductIds null|array
  */
 
 $form = $form ?? '';
@@ -18,6 +19,7 @@ $form = $form ?? '';
 /** @var $cart Cart | null */
 $cart = Cart::extract($renew ?? false);
 $isEmptyCart = !$cart || !$cart->cartProducts || !count($cart->cartProducts);
+$unProductIds = Cart::extractUnProductIds();
 
 ?>
 
@@ -58,6 +60,9 @@ $isEmptyCart = !$cart || !$cart->cartProducts || !count($cart->cartProducts);
                 <?php if ($product->unit_id && $product->measure) { ?>
                     <span class="measure"><?= (float) $product->measure ?> <?= $product->unit->v('name') ?></span>
                 <?php } ?>
+                <?php if (in_array($product->id, $unProductIds)) { ?>
+                    <span class="last-product"><?= Yii::t('common', 'last') ?></span>
+                <?php } ?>
 
                 <div class="cart-product-buttons">
                     <div class="input-group input-group-sm">
@@ -68,6 +73,7 @@ $isEmptyCart = !$cart || !$cart->cartProducts || !count($cart->cartProducts);
                             </button>
                         </div>
                         <input type="text" class="form-control product-input" value="<?= $cp->quantity ?>"
+                               max="<?= $product->availability ?>"
                                data-url="<?= CH::$pLng ?>/cart/change" />
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default plus" data-url="<?= CH::$pLng ?>/cart/plus-minus">

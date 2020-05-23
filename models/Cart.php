@@ -231,6 +231,7 @@ class Cart extends ActiveRecord
 
     /**
      * @return array
+     * какие продукты в корзине
      */
     public static function extractProductIds() {
         $productIds = [];
@@ -238,10 +239,28 @@ class Cart extends ActiveRecord
         /** @var $cart Cart */
         if ($cart && $cart->cartProducts && count($cart->cartProducts)) {
             foreach ($cart->cartProducts as $cp) {
-                $productIds[] = $cp->product->id;
+                $productIds[] = $cp->product_id;
             }
         }
         return $productIds;
+    }
+
+    /**
+     * @return array
+     * какие продукты заказываются последними
+     */
+    public static function extractUnProductIds() {
+        $unProductIds = [];
+        $cart = static::extract();
+        /** @var $cart Cart */
+        if ($cart && $cart->cartProducts && count($cart->cartProducts)) {
+            foreach ($cart->cartProducts as $cp) {
+                if ($cp->quantity >= $cp->product->availability) {
+                    $unProductIds[] = $cp->product_id;
+                }
+            }
+        }
+        return $unProductIds;
     }
 
 
@@ -279,6 +298,10 @@ class Cart extends ActiveRecord
             $cp->product_id = $data['product_id'];
             $cp->quantity = $data['quantity'];
         }
+        $product = Product::findOne($data['product_id']);
+        if ($product->availability < $cp->quantity) {
+            $cp->quantity = $product->availability;
+        }
         $cp->save(false);
         return true;
     }
@@ -305,8 +328,9 @@ class Cart extends ActiveRecord
             return true;
         } else {
             $product = Product::find()
-                ->where(['and', ['id' => $productId], 'availability > 0'])
-                ->count();
+                ->where(['id' => $productId])
+                ->andWhere('availability > 0')
+                ->one();
             if ($product) {
                 $cart = static::extract();
                 if (!$cart) {
@@ -314,7 +338,6 @@ class Cart extends ActiveRecord
                     $cart->key = static::extractKey();
                     $cart->user_id = Yii::$app->user->isGuest ? 0 : Yii::$app->user->id;
                     $cart->save();
-                    // TODO добавить валидацию и вывод ошибок здесь
                 }
                 $cp = CartProduct::find()->where(['cart_id' => $cart->id, 'product_id' => $productId])->one();
                 if ($cp) {
@@ -325,8 +348,10 @@ class Cart extends ActiveRecord
                     $cp->product_id = $productId;
                     $cp->quantity = $quantity;
                 }
+                if ($product->availability < $cp->quantity) {
+                    $cp->quantity = $product->availability;
+                }
                 $cp->save();
-                // TODO добавить валидацию и вывод ошибок здесь
 
                 return true;
             } else {
@@ -367,6 +392,10 @@ class Cart extends ActiveRecord
         if ($data['plus_minus'] == '+') {
             if ($cp) {
                 $cp->quantity += 1;
+                $product = Product::findOne($data['product_id']);
+                if ($product->availability > $cp->quantity) {
+                    return ['error' => Yii::t('common', 'Product ends')];
+                }
             } else {
                 $cp = new CartProduct();
                 $cp->cart_id = $cart->id;

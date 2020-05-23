@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if ($op->product) {
                                 $html = '<div style="clear:both;">';
                                 $p = $op->product;
-                                $src = Picture::getThumb($p->picture->src ?: $p->content->img);
+                                $src = Picture::getThumb($p->picture->src) ?: Picture::getThumb($p->content->img);
                                 if ($src) {
                                     $html .= '<img src="' . $src .'" style="width: 50px;float: left;" />';
                                 }
@@ -126,8 +126,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 if ($p->measure && $p->unit) {
                                     $html .= ' (' . $p->measure * 1 . ' ' . $p->unit->v('name') . ')';
                                 }
-                                if (!$p->availability) {
-                                    $html .= '<br /><span style="color: red;">[' . Yii::t('admin', 'Availability') . ': 0]</span>';
+                                if (($p->availability < $op->quantity) && ($model->status == 1)) {
+                                    $html .= '<br /><span style="color: red;">'
+                                        . '[' . Yii::t('admin', 'Availability') . ': ' . $p->availability . ']'
+                                        . '</span>';
                                 }
                                 $html .= '<br />' . $p->curPrice() . ' ₴ x ' . $op->quantity . ' = ' . ($p->curPrice() * $op->quantity) . ' ₴';
                                 $html .= "</div></div>";

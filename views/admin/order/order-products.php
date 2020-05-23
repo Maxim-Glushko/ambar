@@ -12,7 +12,7 @@ use app\helpers\Common as CH;
 ?>
 
 <?php if (!$model->orderProducts || !count($model->orderProducts)) { ?>
-    <p style="color: red;"><?= Yii::t('admin', 'There is no one Products in hte Order') ?></p>
+    <p style="color: red;"><?= Yii::t('admin', 'There is no one Products in the Order') ?></p>
 <?php } ?>
 
 <div class="row">
